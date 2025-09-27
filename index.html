@@ -609,6 +609,26 @@ function setTab(name){
   });
 }
 
+// wire up tab buttons (fix for tabs not switching)
+(function bindTabs(){
+  document.querySelectorAll('nav button[data-tab]')
+    .forEach(btn=> btn.addEventListener('click', ()=> setTab(btn.dataset.tab)));
+})();"]`);
+    if(btn){ btn.classList.toggle('tab-active', t===name); btn.classList.toggle('tab-inactive', t!==name); }
+    const sec=$(`tab-${t}`); if(sec){ if(t===name) sec.classList.remove('hidden'); else sec.classList.add('hidden'); }
+  });
+}
+
+// wire up tab buttons (fix for tabs not switching)
+(function bindTabs(){
+  document.querySelectorAll('nav button[data-tab]')
+    .forEach(btn=> btn.addEventListener('click', ()=> setTab(btn.dataset.tab)));
+})();"]`);
+    if(btn){ btn.classList.toggle('tab-active', t===name); btn.classList.toggle('tab-inactive', t!==name); }
+    const sec=$(`tab-${t}`); if(sec){ if(t===name) sec.classList.remove('hidden'); else sec.classList.add('hidden'); }
+  });
+}
+
 // header buttons
 $('btn-reveal').onclick=()=>{ state.reveal=!state.reveal; $('btn-reveal').textContent= state.reveal? 'Hide answers':'Reveal answers'; renderMCQ(); renderSections(); buildExam(); };
 $('btn-export').onclick=()=>{
@@ -630,22 +650,4 @@ $('btn-resume').onclick=()=>{ if(state.seconds>0){ state.ticking=true; $('btn-re
 $('btn-toggle-reveal').onclick=()=>{ if(!state.ticking){ state.reveal=!state.reveal; buildExam(); } };
 
 function fmt(s){ const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), x=s%60; const pad=n=>String(n).padStart(2,'0'); return `${pad(h)}:${pad(m)}:${pad(x)}`; }
-function tick(){ if(!state.ticking) return; state.seconds=Math.max(0,state.seconds-1); $('time').textContent=fmt(state.seconds); if(state.seconds===0){ state.ticking=false; state.reveal=true; clearInterval(state.timer);} }
-
-// practice controls
-$('btn-mcq-shuffle').onclick=()=> renderMCQ();
-$('mcq-count').onchange=()=> renderMCQ();
-
-// guidelines: shuffle mini‑quiz and jump links
-$('btn-shuffle-miniquiz').onclick=()=>{ document.querySelectorAll('.miniquiz').forEach(b=>{ b.innerHTML=''; b.dataset.ready=''; }); renderMiniQuizzes(); };
-
-function renderMiniQuizzes(){ document.querySelectorAll('.miniquiz').forEach(box=>{ if(box.dataset.ready) return; buildMiniQuiz(box, box.dataset.topic); box.dataset.ready='1'; }); }
-
-function renderAll(){ renderTopicButtons(); renderMCQ(); renderSections(); renderGallery(); renderGuidelineTopics(); renderMiniQuizzes(); }
-
-$('year').textContent = new Date().getFullYear();
-renderAll();
-setTab('practice');
-</script>
-</body>
-</html>
+function tick(){ if(!state.ticking) return; state.seconds=Math.max(0,state.seconds-1); $('time').textContent=fmt(state.seconds); if(state.seconds
