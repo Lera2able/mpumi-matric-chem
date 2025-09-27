@@ -203,7 +203,19 @@ const MCQ_BANK = [
   {topic:'electro',q:'In an electrolytic cell…', options:['Reaction spontaneous','Needs power source','Anode is positive','Both B and C'], answer:3, why:'External power; anode is positive in electrolysis.'},
   {topic:'energy',q:'Exothermic reaction has…', options:['ΔH>0 and products above','ΔH<0 and products below','ΔH=0','no activation energy'], answer:1, why:'Products lower than reactants; energy released.'},
   {topic:'props',q:'Branching generally…', options:['raises BP','lowers BP','no effect','only affects MP'], answer:1, why:'Lower surface area → weaker London forces.'},
-  {topic:'rxn',  q:'Propene + HBr (no peroxide) gives…', options:['1‑bromopropane','2‑bromopropane','propan‑2‑ol','propane'], answer:1, why:'Markovnikov addition.'}
+  {topic:'rxn',  q:'Propene + HBr (no peroxide) gives…', options:['1‑bromopropane','2‑bromopropane','propan‑2‑ol','propane'], answer:1, why:'Markovnikov addition.'},
+  // expanded bank
+  {topic:'org',  q:'General formula for alkenes is…', options:['CnH2n','CnH2n+2','CnH2n−2','CnH2O'], answer:0, why:'One double bond → CnH2n.'},
+  {topic:'org',  q:'Which is an ester?', options:['CH3COOCH3','CH3COCH3','CH3CHO','CH3CH2OH'], answer:0, why:'–COO– group present.'},
+  {topic:'props',q:'Which will have the highest boiling point?', options:['pentane','2‑methylbutane','propan‑1‑ol','propanone'], answer:2, why:'Alcohol with H‑bonding.'},
+  {topic:'rxn',  q:'Dehydration of ethanol with hot conc. H2SO4 gives…', options:['ethene + H2O','ethane','ethanoic acid','ethanal'], answer:0, why:'Elimination → alkene.'},
+  {topic:'energy',q:'Activation energy is…', options:['energy of products','minimum energy needed for effective collision','enthalpy change','bond energy only'], answer:1, why:'Threshold energy for reaction.'},
+  {topic:'rates',q:'Which will NOT increase rate?', options:['increasing temperature','adding a catalyst','increasing surface area','decreasing pressure for gases'], answer:3, why:'Lower pressure reduces collisions.'},
+  {topic:'eq',   q:'For endothermic forward reaction, increasing T shifts…', options:['left','right','no change','depends on pressure only'], answer:1, why:'Heat is a reactant for endo → shift right.'},
+  {topic:'acids',q:'pH of 1.0×10⁻³ M HCl at 25 °C ≈', options:['1','2','3','11'], answer:2, why:'Strong acid: pH = −log(1e−3) = 3.'},
+  {topic:'electro',q:'In a galvanic cell, electrons flow…', options:['cathode → anode through wire','anode → cathode through wire','salt bridge to wire','do not flow'], answer:1, why:'Oxidation at anode supplies electrons to cathode.'},
+  {topic:'energy',q:'On an exothermic profile, ΔH is measured as…', options:['peak to reactants','products to peak','reactants to products drop','cannot be measured'], answer:2, why:'Vertical drop from reactants to products.'},
+  {topic:'props',q:'Vapour pressure is…', options:['pressure of vapour in equilibrium with its liquid','same as atmospheric pressure','always higher at lower temperature','independent of IMF'], answer:0, why:'Definition; stronger IMF → lower VP.'}
 ];
 
 // ===== Structured questions (short set) =====
@@ -320,12 +332,18 @@ function ItemCard(topicId, item){
 
 function TopicBlock(sec){
   const block = el('section','p-4 rounded-2xl border bg-white shadow-sm');
+  block.id = 'sec-'+sec.id;
   const h = el('div','flex items-center justify-between');
   h.appendChild(el('h3','text-lg font-semibold', sec.heading));
-  h.appendChild(el('span','badge', sec.blurb));
+  const r = el('div','flex items-center gap-2');
+  const shuffleBtn = el('button','px-3 py-1 rounded-xl border text-sm hover:bg-gray-100','Shuffle questions');
+  shuffleBtn.dataset.sectionId = sec.id;
+  shuffleBtn.onclick = ()=> shuffleSection(sec.id);
+  r.appendChild(el('span','badge', sec.blurb));
+  r.appendChild(shuffleBtn);
+  h.appendChild(r);
   block.appendChild(h);
-  block.id = 'sec-'+sec.id;
-  sec.items.forEach(it=> block.appendChild(ItemCard(sec.id,it)));
+  (state.sectionItems[sec.id]||sec.items).forEach(it=> block.appendChild(ItemCard(sec.id,it)));
   return block;
 }
 
@@ -400,7 +418,25 @@ function renderMCQ(){
 }
 
 function renderSections(){
-  const host=$('sections'); host.innerHTML=''; SECTIONS.forEach(sec=> host.appendChild(TopicBlock(sec)));
+  const host=$('sections'); host.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    if(!state.sectionItems[sec.id]) state.sectionItems[sec.id]=[...sec.items];
+    host.appendChild(TopicBlock(sec));
+  });
+}
+
+function renderSection(id){
+  const secDef = SECTIONS.find(s=>s.id===id); if(!secDef) return;
+  const host = $('sections'); const old = document.getElementById('sec-'+id); if(!old) return;
+  const idx = Array.from(host.children).indexOf(old);
+  const fresh = TopicBlock(secDef);
+  host.replaceChild(fresh, old);
+}
+
+function shuffleSection(id){
+  const items = state.sectionItems[id] || (state.sectionItems[id]=[...(SECTIONS.find(s=>s.id===id)?.items||[])]);
+  state.sectionItems[id] = shuffle(items);
+  renderSection(id);
 }
 
 function renderGallery(){
@@ -562,7 +598,7 @@ function buildExam(){
 }
 
 // ===== state & bindings =====
-const state = { reveal:false, responses:{}, mode:'practice', seconds:3*60*60, timer:null, ticking:false, paper:null, mcqTopic:null };
+const state = { reveal:false, responses:{}, mode:'practice', seconds:3*60*60, timer:null, ticking:false, paper:null, mcqTopic:null, sectionItems:{} };
 
 function setTab(name){
   state.mode=name;
