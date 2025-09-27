@@ -23,8 +23,8 @@
       <h1 class="text-xl md:text-2xl font-bold">Mpumi • CAPS Grade 12 Chemistry (Paper 2)</h1>
       <div class="flex items-center gap-2">
         <button id="btn-reveal" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Reveal answers</button>
-        <button id="btn-export" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Download my long-answers (.txt)</button>
-        <button id="btn-clear" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Clear long-answers</button>
+        <button id="btn-export" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Download my long‑answers (.txt)</button>
+        <button id="btn-clear" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Clear long‑answers</button>
       </div>
     </div>
     <nav class="mt-3 flex gap-6 text-sm">
@@ -40,16 +40,21 @@
   <section id="tab-practice" class="space-y-6">
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
       <h2 class="text-lg font-semibold">Exam structure</h2>
-      <p class="text-sm text-gray-700 mt-1">3 hours • 150 marks • Q1 MCQ (20) + Q2–Q9 structured. Use the chips to jump to topics.</p>
-      <div class="mt-3 flex flex-wrap gap-2" id="topic-chips"></div>
+      <p class="text-sm text-gray-700 mt-1">3 hours • 150 marks • Q1 MCQ (20) + Q2–Q9 structured. Use the topic buttons to jump or filter.</p>
+      <div id="topic-buttons" class="mt-3 flex flex-wrap gap-2"></div>
     </section>
 
     <!-- MCQ block -->
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <div class="flex items-center justify-between">
-        <h3 class="text-lg font-semibold">Question 1: Multiple Choice (10 × 2 = 20)</h3>
-        <div class="text-sm text-gray-600">Score: <span id="mcq-score">0</span>/<span id="mcq-total">0</span> <span id="mcq-final" class="text-gray-500"></span></div>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h3 class="text-lg font-semibold">Question 1: Multiple Choice</h3>
+        <div class="flex items-center gap-2">
+          <button id="btn-mcq-shuffle" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Shuffle MCQs</button>
+          <label class="text-sm text-gray-600">Show <input id="mcq-count" type="number" min="5" max="40" value="10" class="w-16 ml-1 px-2 py-1 border rounded-lg"> questions</label>
+          <div class="text-sm text-gray-600">Score: <span id="mcq-score">0</span>/<span id="mcq-total">0</span> <span id="mcq-final" class="text-gray-500"></span></div>
+        </div>
       </div>
+      <div id="mcq-filters" class="mt-2 text-sm text-gray-600">Current filter: <span id="mcq-filter-name">All topics</span></div>
       <div id="mcq-list" class="mt-3"></div>
     </section>
 
@@ -64,7 +69,7 @@
     </section>
   </section>
 
-  <!-- EXAM TAB (simple generator wrapper for now) -->
+  <!-- EXAM TAB -->
   <section id="tab-exam" class="hidden space-y-6">
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
       <div class="flex items-center justify-between">
@@ -95,275 +100,73 @@
   <!-- GUIDELINES TAB -->
   <section id="tab-guidelines" class="hidden space-y-6">
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <h2 class="text-lg font-semibold">Exam Guidelines • CAPS Paper 2 Topics</h2>
-      <p class="text-sm text-gray-700">This is a simplified study outline of everything Mpumi must know for Chemistry Paper 2. Each topic now includes <b>worked examples</b> with simple, step‑by‑step memos, plus links to the matching practice questions.</p>
+      <h2 class="text-lg font-semibold">Exam Guidelines • CAPS Paper 2</h2>
+      <p class="text-sm text-gray-700">This is the study guide Mpumi can follow. It explains the sections, how to study them, and gives high‑yield tips to score marks. Use the blue links to jump straight to matching practice questions.</p>
       <div class="mt-3"><button id="btn-shuffle-miniquiz" class="px-3 py-2 rounded-xl border hover:bg-gray-100">Shuffle mini‑quizzes</button></div>
     </section>
 
-    <!-- 1. Representing Chemical Change -->
+    <!-- How the exam works -->
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details open>
-        <summary class="font-semibold cursor-pointer">1. Representing Chemical Change</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p><b>Core:</b> write and balance equations; conserve atoms and mass; use state symbols.</p>
-          <p><b>Tips:</b> Balance metals → non‑metals → O and H last. Use coefficients, not subscripts. Check total charge if ionic.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Balancing)</div>
-            <div class="mt-1">Balance: <span class="mono">C<sub>3</sub>H<sub>8</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O</span></div>
-            <div class="mt-2"><b>Memo (simple):</b> 3 C → 3 CO₂; 8 H → 4 H₂O; O on RHS = 3×2 + 4×1 = 10 O → need 5 O₂. Final: <span class="mono">C₃H₈ + 5O₂ → 3CO₂ + 4H₂O</span>.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (States & Ions)</div>
-            <div class="mt-1">Write states: neutralisation of strong acid and base.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(ℓ)</span>. Net ionic: <span class="mono">H⁺ + OH⁻ → H₂O</span>.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="change"></div>
-          <div><a href="#sec-org" class="text-blue-600 underline">Jump to Q2 practice</a></div>
-        </div>
-      </details>
+      <h3 class="text-lg font-semibold">1) How the Paper is Structured</h3>
+      <ul class="list-disc pl-6 text-sm mt-2 space-y-1">
+        <li><b>Time:</b> 3 hours</li>
+        <li><b>Marks:</b> 150</li>
+        <li><b>Layout:</b> Q1 MCQ (10×2=20) + Q2–Q9 structured on key topics</li>
+        <li><b>Skills tested:</b> basic recall, explain/understand, apply & analyse, evaluate. Expect graphs, calculations and short explanations.</li>
+      </ul>
     </section>
 
-    <!-- 2. Quantitative Aspects of Chemical Change -->
+    <!-- Study advice block -->
     <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">2. Quantitative Aspects of Chemical Change</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <ul class="list-disc pl-6">
-            <li><b>Moles:</b> <span class="mono">n = m/M</span>; gases at STP: 22.4 dm³·mol⁻¹.</li>
-            <li><b>Solutions:</b> <span class="mono">C = n/V</span> (mol·dm⁻³).</li>
-            <li><b>Stoichiometry:</b> limiting reagent, % yield, % purity.</li>
+      <h3 class="text-lg font-semibold">2) Study Advice to Get High Marks</h3>
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="p-3 border rounded-xl">
+          <div class="font-semibold">A. Easy marks first</div>
+          <ul class="list-disc pl-6 mt-1 space-y-1">
+            <li>Learn short definitions (activation energy, conjugate base, boiling point, oxidation).</li>
+            <li>Practice trend questions (BP vs chain length, rate vs temperature) — write the key <i>reason</i> using the right words.</li>
+            <li>Show formulas and substitutions. Units every step. Round at the end.</li>
           </ul>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Limiting reagent)</div>
-            <div class="mt-1">Given 10.0 g Mg reacts with 0.50 mol HCl in <span class="mono">Mg + 2HCl → MgCl₂ + H₂</span>. Find limiting reagent and moles H₂.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">n(Mg)=10.0/24.3≈0.41 mol</span>; need <span class="mono">0.82 mol HCl</span> but only 0.50 mol available → HCl limits. Ratio 2:1 gives <span class="mono">n(H₂)=0.50/2=0.25 mol</span>.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Concentration)</div>
-            <div class="mt-1">How many moles in 250.0 cm³ of 0.200 M Na₂SO₄?</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">V=0.2500 dm³</span>; <span class="mono">n=CV=0.200×0.2500=0.0500 mol</span>.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="quant"></div>
-          <div><a href="#sec-energy" class="text-blue-600 underline">Try Q5 & stoich in Q2</a></div>
         </div>
-      </details>
+        <div class="p-3 border rounded-xl">
+          <div class="font-semibold">B. Core calculations</div>
+          <ul class="list-disc pl-6 mt-1 space-y-1">
+            <li>Stoichiometry: moles, limiting reagent, % yield, % purity.</li>
+            <li>Gas molar volume at STP (22.4 dm³·mol⁻¹).</li>
+            <li>ΔH using bond enthalpies.</li>
+            <li>Kc with ICE tables.</li>
+            <li>Titrations and pH around equivalence.</li>
+            <li>E°cell = E°(cath) − E°(an).</li>
+          </ul>
+        </div>
+        <div class="p-3 border rounded-xl">
+          <div class="font-semibold">C. Organics = big section</div>
+          <ul class="list-disc pl-6 mt-1 space-y-1">
+            <li>IUPAC naming up to 8 carbons.</li>
+            <li>Isomers: chain, position, functional.</li>
+            <li>Reactions: addition, substitution, elimination, esterification (conditions!).</li>
+          </ul>
+        </div>
+        <div class="p-3 border rounded-xl">
+          <div class="font-semibold">D. Exam routine</div>
+          <ul class="list-disc pl-6 mt-1 space-y-1">
+            <li>MCQs first for momentum.</li>
+            <li>Then 1 structured question per topic.</li>
+            <li>Finally full timed papers (3 h). Mark your work and correct errors.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- 3. Intermolecular Forces -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">3. Intermolecular Forces</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>London (all), Dipole–dipole (polar), H‑bonding (H with N/O/F). Stronger IMF → higher boiling point, melting point; lower vapour pressure.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Ranking BP)</div>
-            <div class="mt-1">Order by increasing BP: propane, propanone, propan‑1‑ol.</div>
-            <div class="mt-2"><b>Memo:</b> propane (London) &lt; propanone (dipole) &lt; propan‑1‑ol (H‑bonding).</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Branching)</div>
-            <div class="mt-1">Which has lower BP: pentane or 2‑methylbutane? Why?</div>
-            <div class="mt-2"><b>Memo:</b> 2‑methylbutane (more branching → smaller surface area → weaker London forces).</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="imf"></div>
-          <div><a href="#sec-props" class="text-blue-600 underline">Go to Q3 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 4. Organic Molecules -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">4. Organic Molecules</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Functional groups, saturated vs unsaturated, IUPAC naming, chain/position/functional isomers.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (IUPAC)</div>
-            <div class="mt-1">Name <span class="mono">CH₃–CH₂–CO–CH₃</span>.</div>
-            <div class="mt-2"><b>Memo:</b> 4 carbons with a carbonyl on C2 → butan‑2‑one.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Isomers)</div>
-            <div class="mt-1">Classify: butane vs 2‑methylpropane.</div>
-            <div class="mt-2"><b>Memo:</b> chain isomers (different skeleton).</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="org"></div>
-          <div><a href="#sec-org" class="text-blue-600 underline">Go to Q2 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 5. Organic Reactions -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">5. Organic Reactions</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Addition (H₂, HBr, H₂O), substitution, elimination, esterification (conc. H₂SO₄, heat, reflux).</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Markovnikov)</div>
-            <div class="mt-1">Predict major product: propene + HBr (no peroxide).</div>
-            <div class="mt-2"><b>Memo:</b> H adds to C with more H → 2‑bromopropane.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Esterification)</div>
-            <div class="mt-1">Write equation: ethanol + ethanoic acid → ? Give conditions.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">CH₃CH₂OH + CH₃COOH ⇌ CH₃COOCH₂CH₃ + H₂O</span>; conc. H₂SO₄, heat, reflux.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="rxn"></div>
-          <div><a href="#sec-rxn" class="text-blue-600 underline">Go to Q4 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 6. Energy & Heats of Reaction -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">6. Energy and Heats of Reaction</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>ΔH sign, exo vs endo, activation energy, energy profiles, bond‑enthalpy estimates: <span class="mono">ΔH ≈ ΣE(broken) − ΣE(formed)</span>.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Bond energies)</div>
-            <div class="mt-1">Estimate ΔH for <span class="mono">H₂ + ½O₂ → H₂O(g)</span>. Data: H–H 436; O=O 498; O–H 463 (kJ·mol⁻¹).</div>
-            <div class="mt-2"><b>Memo:</b> break 436 + 0.5×498 = 685; form 2×463 = 926; ΔH ≈ 685 − 926 = −241 kJ·mol⁻¹ (exo).</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Profile)</div>
-            <div class="mt-1">Sketch exothermic profile and label Ea(fwd), Ea(rev), ΔH.</div>
-            <div class="mt-2"><b>Memo:</b> products below reactants; ΔH is vertical drop; Ea arrows from levels to peak.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="energy"></div>
-          <div><a href="#sec-energy" class="text-blue-600 underline">Go to Q5 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 7. Rates of Reaction -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">7. Rates of Reaction</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Rate = Δc/Δt; factors: nature, surface area, concentration/pressure, temperature, catalyst; collision theory; MB curves.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Collision theory)</div>
-            <div class="mt-1">Explain why higher temperature increases rate.</div>
-            <div class="mt-2"><b>Memo:</b> particles move faster; more have E ≥ Ea → more effective collisions per second.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Catalyst)</div>
-            <div class="mt-1">What changes on the Maxwell–Boltzmann curve when a catalyst is used?</div>
-            <div class="mt-2"><b>Memo:</b> Ea threshold effectively lowers (shift left) → larger fraction above Ea; peak shape similar.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="rates"></div>
-          <div><a href="#sec-rates" class="text-blue-600 underline">Go to Q6 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 8. Chemical Equilibrium -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">8. Chemical Equilibrium</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Closed systems, reversible reactions, dynamic equilibrium, Le Châtelier; write Kc; do ICE tables; interpret graphs.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Kc value)</div>
-            <div class="mt-1">For <span class="mono">N₂ + 3H₂ ⇌ 2NH₃</span>, write Kc and say what a small Kc means.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">Kc = [NH₃]²/([N₂][H₂]³)</span>; small Kc → mostly reactants at equilibrium.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Le Châtelier)</div>
-            <div class="mt-1">Effect of increasing pressure on the Haber process.</div>
-            <div class="mt-2"><b>Memo:</b> fewer moles on RHS (2 vs 4) → higher pressure shifts right → more NH₃.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="eq"></div>
-          <div><a href="#sec-eq" class="text-blue-600 underline">Go to Q7 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 9. Acids & Bases -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">9. Acids and Bases</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Brønsted–Lowry, conjugate pairs, strong vs weak, pH and Ka/Kb, hydrolysis, titration logic and indicators.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Titration)</div>
-            <div class="mt-1">25.00 cm³ of 0.100 M HCl is titrated with 0.125 M NaOH. Find V at equivalence and pH there.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">n(HCl)=0.02500×0.100=0.002500 mol</span>; need same moles NaOH → <span class="mono">V=0.002500/0.125=0.02000 L=20.00 cm³</span>; strong–strong → pH ≈ 7 at 25 °C.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (Hydrolysis)</div>
-            <div class="mt-1">Predict pH effect: <span class="mono">CH₃COONa(aq)</span> vs <span class="mono">NH₄Cl(aq)</span>.</div>
-            <div class="mt-2"><b>Memo:</b> acetate salt basic (OH⁻ formed) → pH>7; ammonium salt acidic (H₃O⁺ formed) → pH<7.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="acids"></div>
-          <div><a href="#sec-acids" class="text-blue-600 underline">Go to Q8 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- 10. Electrochemistry -->
-    <section class="p-4 rounded-2xl border bg-white shadow-sm">
-      <details>
-        <summary class="font-semibold cursor-pointer">10. Electrochemistry</summary>
-        <div class="mt-2 text-sm text-gray-800 space-y-3">
-          <p>Galvanic vs electrolytic, anode/cathode signs, half‑reactions, <span class="mono">E°cell = E°cath − E°an</span>, industrial electrolysis.</p>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 1 (Cell notation & half‑reactions)</div>
-            <div class="mt-1">For <span class="mono">Zn|Zn²⁺(1.0 M)||Cu²⁺(1.0 M)|Cu</span>, identify anode/cathode and write both half‑reactions.</div>
-            <div class="mt-2"><b>Memo:</b> anode: <span class="mono">Zn → Zn²⁺ + 2e⁻</span>; cathode: <span class="mono">Cu²⁺ + 2e⁻ → Cu</span>; electrons: Zn → Cu.</div>
-          </div>
-
-          <div class="p-3 bg-gray-50 border rounded-xl">
-            <div class="font-semibold">Worked Example 2 (E°cell)</div>
-            <div class="mt-1">Use E°(Zn²⁺/Zn)=−0.76 V; E°(Cu²⁺/Cu)=+0.34 V to find <span class="mono">E°cell</span>.</div>
-            <div class="mt-2"><b>Memo:</b> <span class="mono">E°cell = 0.34 − (−0.76) = +1.10 V</span> → spontaneous.</div>
-          </div>
-
-          <div class="mt-3 miniquiz" data-topic="electro"></div>
-          <div><a href="#sec-electro" class="text-blue-600 underline">Go to Q9 practice</a></div>
-        </div>
-      </details>
-    </section>
-
-  </section>
-
+    <!-- Topic-by-topic with worked examples and mini‑quizzes -->
+    <div id="guideline-topics" class="space-y-6"></div>
   </section>
 </main>
 
 <footer class="max-w-7xl mx-auto px-4 py-6 text-xs text-gray-500">© <span id="year"></span> Mpumi’s CAPS Chemistry • Paper 2.</footer>
 
 <script>
-// ---------- helpers ----------
+// ===== helpers =====
 const $ = (id)=>document.getElementById(id);
 const el = (t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!==undefined)e.innerHTML=h;return e};
 const save = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
@@ -373,10 +176,9 @@ function placeholderDataURL(filename){
   const svg=encodeURIComponent(`<?xml version='1.0'?>\n<svg xmlns='http://www.w3.org/2000/svg' width='900' height='540'>\n<defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='#f3f4f6'/><stop offset='100%' stop-color='#e5e7eb'/></linearGradient></defs>\n<rect width='100%' height='100%' fill='url(#g)'/>\n<g font-family='Segoe UI, Roboto, Arial' fill='#374151'>\n<text x='50%' y='48%' text-anchor='middle' font-size='24'>Missing image</text>\n<text x='50%' y='58%' text-anchor='middle' font-size='16'>assets/${filename}</text>\n</g></svg>`);
   return `data:image/svg+xml;charset=utf-8,${svg}`; }
 function safeImage(imgEl, src){ imgEl.onerror=null; const name=(src.split('/').pop()||'diagram.png'); imgEl.src=placeholderDataURL(name); }
-// small utility to randomise arrays
 function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
-// ---------- topics used for chips ----------
+// ===== topics =====
 const TOPICS = [
   {id:'org', title:'Q2 Organic Chemistry'},
   {id:'props', title:'Q3 Physical Properties of Organics'},
@@ -388,65 +190,52 @@ const TOPICS = [
   {id:'electro', title:'Q9 Electrochemistry'}
 ];
 
-// ---------- MCQ bank ----------
-const MCQ = [
-  {q:'The general formula for alkanes is…', options:['CnH2n','CnH2n+2','CnH2n-2','CnH2nO'], answer:1, why:'Alkanes are saturated: CnH2n+2.'},
-  {q:'Which compound is a ketone?', options:['CH3CH2OH','CH3COCH3','CH3CHO','CH3COOH'], answer:1, why:'Carbonyl within chain (ketone).'},
-  {q:'Main IMF between ethanol molecules?', options:['London','Dipole–dipole','Hydrogen bonding','Metallic'], answer:2, why:'O–H allows strong H‑bonding.'},
-  {q:'Increasing which will increase rate?', options:['Decrease surface area','Increase temperature','Dilute solution','Remove catalyst'], answer:1, why:'Higher T gives more successful collisions.'},
-  {q:'N2 + 3H2 ⇌ 2NH3 (ΔH<0): which favours forward?', options:['Increase T','Increase pressure','Decrease pressure','Add catalyst only'], answer:1, why:'Fewer moles on product side; ↑P favours products.'},
-  {q:'Conjugate base of H2PO4− is…', options:['HPO4^2−','PO4^3−','H3PO4','OH−'], answer:0, why:'Remove one H+ → HPO4^2−.'},
-  {q:'Strongest acid has the…', options:['largest Ka','smallest Ka','Ka=1','pKa large'], answer:0, why:'Bigger Ka = stronger acid.'},
-  {q:'Spontaneous under standard conditions?', options:['Zn + Cu2+ → Zn2+ + Cu','Cu + Zn2+ → Cu2+ + Zn','Ag + Cu2+ → Ag+ + Cu','Cl2 + 2Br− → 2Cl− + Br2'], answer:0, why:'E°cell positive for Zn/Cu.'},
-  {q:'In an electrolytic cell…', options:['Reaction spontaneous','Needs power source','Anode is positive','Both B and C'], answer:3, why:'External power; anode is positive in electrolysis.'},
-  {q:'Eutrophication best described as…', options:['O2 decrease due to nutrients','Ozone formation','Neutralising acids in lakes','Excess chlorine in water'], answer:0, why:'Nutrient run‑off → algal blooms → O2 drop.'}
+// ===== MCQ bank with topics =====
+const MCQ_BANK = [
+  {topic:'org',  q:'The general formula for alkanes is…', options:['CnH2n','CnH2n+2','CnH2n-2','CnH2nO'], answer:1, why:'Alkanes are saturated: CnH2n+2.'},
+  {topic:'org',  q:'Which compound is a ketone?', options:['CH3CH2OH','CH3COCH3','CH3CHO','CH3COOH'], answer:1, why:'Carbonyl within chain (ketone).'},
+  {topic:'props',q:'Main IMF between ethanol molecules?', options:['London','Dipole–dipole','Hydrogen bonding','Metallic'], answer:2, why:'O–H allows strong H‑bonding.'},
+  {topic:'rates',q:'Increasing which will increase rate?', options:['Decrease surface area','Increase temperature','Dilute solution','Remove catalyst'], answer:1, why:'Higher T gives more successful collisions.'},
+  {topic:'eq',   q:'N2 + 3H2 ⇌ 2NH3 (ΔH<0): which favours forward?', options:['Increase T','Increase pressure','Decrease pressure','Add catalyst only'], answer:1, why:'Fewer moles on product side; ↑P favours products.'},
+  {topic:'acids',q:'Conjugate base of H2PO4− is…', options:['HPO4^2−','PO4^3−','H3PO4','OH−'], answer:0, why:'Remove one H+ → HPO4^2−.'},
+  {topic:'acids',q:'Strongest acid has the…', options:['largest Ka','smallest Ka','Ka=1','pKa large'], answer:0, why:'Bigger Ka = stronger acid.'},
+  {topic:'electro',q:'Spontaneous under standard conditions?', options:['Zn + Cu2+ → Zn2+ + Cu','Cu + Zn2+ → Cu2+ + Zn','Ag + Cu2+ → Ag+ + Cu','Cl2 + 2Br− → 2Cl− + Br2'], answer:0, why:'E°cell positive for Zn/Cu.'},
+  {topic:'electro',q:'In an electrolytic cell…', options:['Reaction spontaneous','Needs power source','Anode is positive','Both B and C'], answer:3, why:'External power; anode is positive in electrolysis.'},
+  {topic:'energy',q:'Exothermic reaction has…', options:['ΔH>0 and products above','ΔH<0 and products below','ΔH=0','no activation energy'], answer:1, why:'Products lower than reactants; energy released.'},
+  {topic:'props',q:'Branching generally…', options:['raises BP','lowers BP','no effect','only affects MP'], answer:1, why:'Lower surface area → weaker London forces.'},
+  {topic:'rxn',  q:'Propene + HBr (no peroxide) gives…', options:['1‑bromopropane','2‑bromopropane','propan‑2‑ol','propane'], answer:1, why:'Markovnikov addition.'}
 ];
 
-// ---------- Structured questions with simple memos ----------
+// ===== Structured questions (short set) =====
 const SECTIONS = [
   { id:'org', heading:'Q2 • Organic Chemistry', blurb:'Functional groups, naming, isomers, typical reactions.', items:[
-    {id:'2.1', marks:6, prompt:`Give the IUPAC names:\n(a) CH3–CH2–CH2–CH3\n(b) CH3–CH2–CO–CH3\n(c) CH2=CH–CH3`, memo:`(a) butane (4 carbons, single bonds).\n(b) butan‑2‑one (ketone on C2).\n(c) propene (3 carbons with a double bond).`},
-    {id:'2.2', marks:6, prompt:`Are these PAIRS chain, position or functional isomers?\n(i) butane vs 2‑methylpropane\n(ii) propan‑1‑ol vs propan‑2‑ol\n(iii) propanal vs propanone`, memo:`(i) Chain isomers (different skeleton).\n(ii) Position isomers (–OH on C1 vs C2).\n(iii) Functional isomers (aldehyde vs ketone).`},
-    {id:'2.3', marks:7, prompt:`Write a balanced equation for the complete combustion of C4H10. Then write the esterification of ethanol with ethanoic acid and name the ester.`, memo:`Combustion: 2 C4H10 + 13 O2 → 8 CO2 + 10 H2O.\nEsterification: CH3CH2OH + CH3COOH ⇌ CH3COOCH2CH3 + H2O.\nName: ethyl ethanoate.`}
+    {id:'2.1', marks:6, prompt:`Give the IUPAC names:\n(a) CH3–CH2–CH2–CH3\n(b) CH3–CH2–CO–CH3\n(c) CH2=CH–CH3`, memo:`(a) butane (4 carbons, single bonds).\n(b) butan‑2‑one (ketone on C2).\n(c) propene (double bond).`},
+    {id:'2.2', marks:6, prompt:`Classify as chain, position or functional isomers:\n(i) butane vs 2‑methylpropane\n(ii) propan‑1‑ol vs propan‑2‑ol\n(iii) propanal vs propanone`, memo:`(i) chain; (ii) position; (iii) functional.`}
   ]},
   { id:'props', heading:'Q3 • Physical Properties of Organics', blurb:'Boiling point, vapour pressure, IMF, branching.', items:[
-    {id:'3.1', marks:6, prompt:`Order by increasing boiling point and give a reason: propane, propanone, propan‑1‑ol.`, memo:`Propane < propanone < propan‑1‑ol (London < dipole–dipole < H‑bonding).`},
-    {id:'3.2', marks:4, prompt:`Which has lower boiling point: pentane or 2‑methylbutane? Motivate.`, memo:`2‑Methylbutane. More branching → smaller surface area → weaker London forces.`},
-    {id:'3.3', marks:5, prompt:`Define boiling point and explain relation to vapour pressure.`, memo:`BP: temp where vapour pressure equals external pressure. Stronger IMFs → lower vapour pressure → higher BP.`}
+    {id:'3.1', marks:6, prompt:`Order by increasing boiling point and give a reason: propane, propanone, propan‑1‑ol.`, memo:`Propane < propanone < propan‑1‑ol (London < dipole–dipole < H‑bonding).`}
   ]},
   { id:'rxn', heading:'Q4 • Organic Reactions', blurb:'Addition, elimination, substitution, esterification.', items:[
-    {id:'4.1', marks:4, prompt:`Hydrohalogenation: write the major product for propene + HBr (no peroxide).`, memo:`CH3–CHBr–CH3 (2‑bromopropane). Markovnikov.`},
-    {id:'4.2', marks:4, prompt:`State the conditions for esterification of ethanol with ethanoic acid.`, memo:`Heat with conc. H2SO4 catalyst under reflux.`},
-    {id:'4.3', marks:4, prompt:`Dehydration of propan‑2‑ol: give the product and name the reaction type.`, memo:`Propene + H2O. Reaction type: elimination (dehydration).`}
+    {id:'4.1', marks:4, prompt:`Hydrohalogenation: major product for propene + HBr (no peroxide).`, memo:`2‑bromopropane (Markovnikov).`}
   ]},
   { id:'energy', heading:'Q5 • Energy & Heats of Reaction', blurb:'ΔH, Ea, profiles, bond enthalpy.', items:[
-    {id:'5.1', marks:4, prompt:`Define heat of reaction (ΔH) and activation energy (Ea).`, memo:`ΔH: energy released/absorbed per reaction as written (products − reactants). Ea: minimum energy for effective collisions.`},
-    {id:'5.2', marks:6, prompt:`Use bond energies to estimate ΔH for: H2 + 1/2 O2 → H2O(g). Data (kJ·mol⁻¹): H–H 436; O=O 498; O–H 463.`, memo:`Break: 436 + 0.5×498 = 685. Form: 2×463 = 926. ΔH ≈ 685 − 926 = −241 kJ·mol⁻¹.`},
-    {id:'5.3', marks:4, prompt:`On an exothermic PE diagram, label reactants, products, Ea(fwd), Ea(rev), and ΔH.`, memo:`Products below reactants (ΔH<0). Ea arrows from levels to peak; ΔH is drop from reactants to products.`}
+    {id:'5.2', marks:6, prompt:`Use bond energies to estimate ΔH for: H2 + 1/2 O2 → H2O(g). Data (kJ·mol⁻¹): H–H 436; O=O 498; O–H 463.`, memo:`Break: 436 + 0.5×498 = 685. Form: 2×463 = 926. ΔH ≈ 685 − 926 = −241 kJ·mol⁻¹.`}
   ]},
   { id:'rates', heading:'Q6 • Rates of Reaction', blurb:'Collision theory; factors; MB curves.', items:[
-    {id:'6.1', marks:4, prompt:`Name TWO ways to increase the rate for Mg + HCl(aq).`, memo:`Increase temperature; increase [HCl]; larger surface area; catalyst.`},
-    {id:'6.2', marks:4, prompt:`Explain using collision theory why higher temperature speeds up a reaction.`, memo:`Particles move faster and more have E ≥ Ea, so more successful collisions per second.`},
-    {id:'6.3', marks:4, prompt:`What does a catalyst do to the energy profile and Maxwell–Boltzmann curve?`, memo:`Alternative path with lower Ea; threshold shifts left so greater fraction above Ea.`}
+    {id:'6.2', marks:4, prompt:`Explain using collision theory why higher temperature speeds up a reaction.`, memo:`Particles move faster and more have E ≥ Ea → more effective collisions per second.`}
   ]},
   { id:'eq', heading:'Q7 • Chemical Equilibrium', blurb:'Le Châtelier, Kc, ICE tables, graphs.', items:[
-    {id:'7.1', marks:4, prompt:`Define chemical equilibrium.`, memo:`Dynamic state in a closed system where forward and reverse rates are equal; concentrations constant.`},
-    {id:'7.2', marks:6, prompt:`For N2 + 3H2 ⇌ 2NH3 (ΔH<0) describe effect of (i) ↑T (ii) ↑P (iii) removing NH3.`, memo:`(i) ↑T favours reverse (less NH3). (ii) ↑P favours fewer moles → more NH3. (iii) Removing NH3 drives forward.`},
-    {id:'7.3', marks:5, prompt:`Write Kc for the reaction above and state what a small Kc means.`, memo:`Kc = [NH3]^2 / ([N2][H2]^3). Small Kc → reactants dominate at equilibrium.`}
+    {id:'7.3', marks:5, prompt:`Write Kc for N2 + 3H2 ⇌ 2NH3 and say what a small Kc means.`, memo:`Kc = [NH3]^2 / ([N2][H2]^3). Small Kc → reactants dominate.`}
   ]},
   { id:'acids', heading:'Q8 • Acids & Bases', blurb:'BL theory, pH, hydrolysis, indicators.', items:[
-    {id:'8.1', marks:3, prompt:`Define a Brønsted–Lowry acid and give one example.`, memo:`Proton donor. Example: HCl donates H+ to water.`},
-    {id:'8.2', marks:6, prompt:`25.00 cm³ of 0.100 M HCl is titrated with 0.125 M NaOH. Volume of base at equivalence? pH at equivalence?`, memo:`n(HCl)=0.02500×0.100=0.002500 mol. V(NaOH)=0.002500/0.125=0.02000 L=20.00 cm³. Strong acid–base → pH≈7.`},
-    {id:'8.3', marks:6, prompt:`State what happens on hydrolysis for (i) CH3COONa(aq) (ii) NH4Cl(aq).`, memo:`(i) Basic: CH3COO− + H2O ⇌ CH3COOH + OH−. (ii) Acidic: NH4+ + H2O ⇌ NH3 + H3O+.`}
+    {id:'8.2', marks:6, prompt:`25.00 cm³ of 0.100 M HCl titrated with 0.125 M NaOH. Volume of base at equivalence? pH at equivalence?`, memo:`n(HCl)=0.02500×0.100=0.002500 mol. V(NaOH)=0.002500/0.125=0.02000 L=20.00 cm³. Strong–strong → pH≈7.`}
   ]},
   { id:'electro', heading:'Q9 • Electrochemistry', blurb:'Cells, half‑reactions, E°cell, industry.', items:[
-    {id:'9.1', marks:5, prompt:`Zn|Zn²⁺(1.0 M)||Cu²⁺(1.0 M)|Cu at 25 °C. Identify anode/cathode and write both half‑reactions.`, memo:`Anode: Zn → Zn²⁺ + 2e⁻. Cathode: Cu²⁺ + 2e⁻ → Cu. e⁻ flow: Zn → Cu.`},
-    {id:'9.2', marks:3, prompt:`Use E°(Zn²⁺/Zn)=−0.76 V; E°(Cu²⁺/Cu)=+0.34 V to find E°cell.`, memo:`E°cell = 0.34 − (−0.76) = +1.10 V (spontaneous).`},
-    {id:'9.3', marks:4, prompt:`Name one industrial use of electrolysis and give ONE safety concern.`, memo:`Chlor‑alkali process (NaOH, Cl2, H2). Safety: Cl2 toxic; H2 flammable; NaOH caustic.`}
+    {id:'9.2', marks:3, prompt:`Use E°(Zn²⁺/Zn)=−0.76 V; E°(Cu²⁺/Cu)=+0.34 V to find E°cell.`, memo:`E°cell = 0.34 − (−0.76) = +1.10 V (spontaneous).`}
   ]}
 ];
 
-// Suggested image list
+// ===== Suggested image list =====
 const ASSETS = [
   {title:'Titration setup', src:'./assets/titration-setup.png', caption:'Burette, pipette, indicator, conical flask.'},
   {title:'Exothermic energy profile', src:'./assets/energy-profile-exo.png', caption:'Label Ea and ΔH.'},
@@ -454,7 +243,51 @@ const ASSETS = [
   {title:'Zn/Cu galvanic cell', src:'./assets/galvanic-zn-cu.png', caption:'Anode Zn, cathode Cu, salt bridge.'}
 ];
 
-// ---------- components ----------
+// ===== Mini‑quiz pools (tiny) =====
+const MINIQ = {
+  change: [
+    {q:'Balance: C2H6 + O2 → CO2 + H2O', opts:['C2H6 + 3O2 → 2CO2 + 3H2O','2C2H6 + 7O2 → 4CO2 + 6H2O','C2H6 + 5O2 → 2CO2 + 2H2O','2C2H6 + 5O2 → 4CO2 + 6H2O'], a:1, why:'Count atoms; avoid fractions in final.'},
+    {q:'Net ionic for strong acid + strong base?', opts:['H+ + OH− → H2O','H3O+ → H2O + H+','Na+ + Cl− → NaCl','H+ + Cl− → HCl'], a:0, why:'Spectators removed → H+ + OH− → H2O.'}
+  ],
+  quant: [
+    {q:'At STP, moles in 11.2 dm³ of CO₂?', opts:['0.25 mol','0.50 mol','1.0 mol','2.0 mol'], a:1, why:'22.4 dm³·mol⁻¹ → 11.2/22.4 = 0.50 mol.'},
+    {q:'250 cm³ of 0.200 M NaCl has how many moles?', opts:['0.0200','0.0250','0.0500','0.00500'], a:2, why:'n=CV=0.200×0.250=0.0500 mol.'}
+  ],
+  imf: [
+    {q:'Stronger IMF means…', opts:['higher vapour pressure','lower boiling point','higher boiling point','no change'], a:2, why:'Stronger IMF → need more energy to boil.'},
+    {q:'Branching generally…', opts:['raises BP','lowers BP','no effect','only affects MP'], a:1, why:'Lower surface area → weaker London forces.'}
+  ],
+  org: [
+    {q:'CH3–CH2–CO–CH3 is a…', opts:['aldehyde','ketone','alcohol','ester'], a:1, why:'Carbonyl inside chain → ketone.'},
+    {q:'Butane vs 2‑methylpropane are…', opts:['position isomers','functional isomers','chain isomers','stereoisomers'], a:2, why:'Different skeletons.'}
+  ],
+  rxn: [
+    {q:'Propene + HBr (no peroxide) gives…', opts:['1‑bromopropane','2‑bromopropane','propan‑2‑ol','propane'], a:1, why:'Markovnikov addition.'},
+    {q:'Esterification needs…', opts:['dilute H₂SO₄, cold','conc. H₂SO₄, heat, reflux','NaOH, heat','UV light'], a:1, why:'Acid catalyst + heat + reflux.'}
+  ],
+  energy: [
+    {q:'Exothermic reaction has…', opts:['ΔH>0 and products above','ΔH<0 and products below','ΔH=0','no activation energy'], a:1, why:'Products lower than reactants.'},
+    {q:'Bond‑enthalpy estimate uses…', opts:['formed − broken','broken − formed','Ea − ΔH','Kc values'], a:1, why:'ΔH ≈ ΣE(broken) − ΣE(formed).'}
+  ],
+  rates: [
+    {q:'Increase rate by…', opts:['lowering T','decreasing [reactant]','using a catalyst','removing surface area'], a:2, why:'Catalyst lowers Ea.'},
+    {q:'Higher T increases rate because…', opts:['more collisions only','more particles have E≥Ea','Ea increases','IMFs decrease'], a:1, why:'Greater fraction above Ea and more frequent collisions.'}
+  ],
+  eq: [
+    {q:'For N2+3H2⇌2NH3, ↑P shifts…', opts:['left','right','no change','depends on T only'], a:1, why:'Fewer moles on RHS (2 vs 4).'},
+    {q:'Small Kc means…', opts:['mostly products','mostly reactants','no reaction','fast reaction'], a:1, why:'Equilibrium lies to reactants.'}
+  ],
+  acids: [
+    {q:'Conjugate base of H2SO4?', opts:['HSO4−','SO4^2−','H3O+','OH−'], a:0, why:'Remove one H+ from H2SO4 → HSO4−.'},
+    {q:'Strong acid vs weak acid:', opts:['stronger has larger Ka','stronger has smaller Ka','stronger has larger pH','no Ka'], a:0, why:'Large Ka → strong acid.'}
+  ],
+  electro: [
+    {q:'In galvanic Zn/Cu cell, anode is…', opts:['Cu','Zn','both','neither'], a:1, why:'Anode is oxidation: Zn→Zn2+ + 2e−.'},
+    {q:'E°cell =', opts:['E°an − E°cath','E°cath − E°an','E°cath + E°an','not defined'], a:1, why:'By convention, E°cell = E°(cath) − E°(an).'}
+  ]
+};
+
+// ===== components =====
 function AnswerBox(key){
   const wrap = el('div','mt-3');
   const ta = el('textarea','answer w-full p-3 rounded-xl border'); ta.placeholder='Type your full answer here…';
@@ -498,7 +331,7 @@ function TopicBlock(sec){
 
 function MCQItem(it, idx){
   const card = el('div','p-4 rounded-2xl border bg-white shadow-sm mb-3');
-  card.appendChild(el('div','text-xs text-gray-500',`MCQ ${idx+1}`));
+  card.appendChild(el('div','text-xs text-gray-500',`MCQ ${idx+1} • ${topicName(it.topic)}`));
   card.appendChild(el('div','font-medium mt-1', it.q));
   const list = el('div','mt-3 grid gap-2');
   const letters=['A','B','C','D'];
@@ -516,27 +349,58 @@ function MCQItem(it, idx){
   return card;
 }
 
-// ---------- render ----------
-const state = { reveal:false, responses:{}, mode:'practice', seconds:3*60*60, timer:null, ticking:false, paper:null };
+function buildMiniQuiz(container, topic){
+  const data = shuffle(MINIQ[topic]||[]).slice(0,2);
+  if(!data.length) return;
+  const wrap = el('div','mt-2 grid sm:grid-cols-2 gap-3');
+  data.forEach((q,i)=>{
+    const card = el('div','p-3 rounded-xl border bg-white');
+    const title = el('div','text-xs text-gray-500',`Mini‑quiz ${i+1}`); card.appendChild(title);
+    const qdiv = el('div','font-medium mt-1', q.q); card.appendChild(qdiv);
+    const opts = el('div','mt-2 grid gap-2');
+    q.opts.forEach((t,idx)=>{
+      const b=el('button','text-left px-3 py-2 rounded-xl border hover:bg-gray-50'); b.innerHTML = `<span class="font-semibold mr-2">${String.fromCharCode(65+idx)}.</span>${t}`;
+      b.onclick=()=>{
+        [...opts.children].forEach(ch=> ch.classList.remove('ring-green','ring-red','ring-blue'));
+        if(idx===q.a){ b.classList.add('ring-green'); fb.textContent='Correct'; fb.className='text-xs text-green-600 mt-2'; }
+        else { b.classList.add('ring-red'); fb.textContent=`Answer: ${String.fromCharCode(65+q.a)} – ${q.why}`; fb.className='text-xs text-red-600 mt-2'; }
+      };
+      opts.appendChild(b);
+    });
+    const fb=el('div','text-xs text-gray-600 mt-2','');
+    card.appendChild(opts); card.appendChild(fb); wrap.appendChild(card);
+  });
+  container.appendChild(wrap);
+}
 
-function renderChips(){
-  const wrap=$('topic-chips'); if(!wrap) return; wrap.innerHTML='';
-  TOPICS.forEach(t=>{ const b=el('button','px-3 py-1 rounded-full border text-sm hover:bg-gray-100', t.title); b.onclick=()=>{
-    document.getElementById('sec-'+t.id)?.scrollIntoView({behavior:'smooth'});
-  }; wrap.appendChild(b); });
+// ===== renderers =====
+function topicName(id){ const t = TOPICS.find(x=>x.id===id); return t? t.title : 'General'; }
+
+function renderTopicButtons(){
+  const host=$('topic-buttons'); host.innerHTML='';
+  const allBtn = el('button','px-3 py-1 rounded-full border text-sm hover:bg-gray-100','All topics');
+  allBtn.onclick=()=>{ state.mcqTopic=null; renderMCQ(); $('mcq-filter-name').textContent='All topics'; };
+  host.appendChild(allBtn);
+  TOPICS.forEach(t=>{
+    const b=el('button','px-3 py-1 rounded-full border text-sm hover:bg-gray-100', t.title);
+    b.onclick=()=>{ state.mcqTopic=t.id; renderMCQ(); $('mcq-filter-name').textContent=t.title; document.getElementById('sec-'+t.id)?.scrollIntoView({behavior:'smooth'}); };
+    host.appendChild(b);
+  });
 }
 
 function renderMCQ(){
-  const list=$('mcq-list'); if(!list) return; list.innerHTML='';
-  MCQ.forEach((q,i)=> list.appendChild(MCQItem(q,i)));
-  $('mcq-total').textContent = MCQ.length;
-  const score = MCQ.reduce((a,q)=> a + ((state.responses[q.q]??-1)===q.answer?1:0), 0);
+  const list=$('mcq-list'); list.innerHTML='';
+  const pool = state.mcqTopic ? MCQ_BANK.filter(m=>m.topic===state.mcqTopic) : MCQ_BANK;
+  const N = Math.max(5, Math.min(40, Number($('mcq-count').value||10)));
+  const sample = shuffle(pool).slice(0,N);
+  sample.forEach((q,i)=> list.appendChild(MCQItem(q,i)));
+  $('mcq-total').textContent = sample.length;
+  const score = sample.reduce((a,q)=> a + ((state.responses[q.q]??-1)===q.answer?1:0), 0);
   $('mcq-score').textContent = score; $('mcq-final').textContent = state.reveal? '(final)':'';
 }
 
 function renderSections(){
-  const host=$('sections'); if(!host) return; host.innerHTML='';
-  SECTIONS.forEach(sec=> host.appendChild(TopicBlock(sec)));
+  const host=$('sections'); host.innerHTML=''; SECTIONS.forEach(sec=> host.appendChild(TopicBlock(sec)));
 }
 
 function renderGallery(){
@@ -549,13 +413,137 @@ function renderGallery(){
   });
 }
 
-// exam builder (simple random sample using existing banks)
+function renderGuidelineTopics(){
+  const host=$('guideline-topics'); host.innerHTML='';
+  const blocks = [
+    {id:'change', title:'3) Representing Chemical Change', bullets:[
+      'Write and balance equations; conserve atoms and mass; use state symbols.',
+      'Balance metals and non‑metals first; do O and H last; adjust coefficients only.'
+    ], link:'org'},
+    {id:'quant', title:'4) Quantitative Aspects of Chemical Change', bullets:[
+      'Key tools: n=m/M; C=n/V; gas molar volume at STP = 22.4 dm³·mol⁻¹.',
+      'Do a quick limiting‑reagent check before % yield/purity.'
+    ], link:'energy'},
+    {id:'imf', title:'5) Intermolecular Forces', bullets:[
+      'London (all molecules), dipole–dipole (polar), hydrogen bonds (H with N/O/F).',
+      'Stronger IMF → higher BP/MP, lower vapour pressure; branching lowers BP.'
+    ], link:'props'},
+    {id:'org', title:'6) Organic Molecules', bullets:[
+      'IUPAC naming up to 8 carbons. Chain/position/functional isomers.',
+      'Recognise functional groups: alkane/alkene/alkyne, halo‑, alcohols, aldehyde, ketone, carboxylic acid, esters.'
+    ], link:'org'},
+    {id:'rxn', title:'7) Organic Reactions', bullets:[
+      'Addition (H₂, HBr, H₂O), substitution, elimination, esterification.',
+      'Know conditions: conc. H₂SO₄ + heat + reflux for esterification.'
+    ], link:'rxn'},
+    {id:'energy', title:'8) Energy and Heats of Reaction', bullets:[
+      'Exo vs endo; activation energy; energy profiles.',
+      'Bond‑enthalpy estimate: ΔH ≈ ΣE(broken) − ΣE(formed).'
+    ], link:'energy'},
+    {id:'rates', title:'9) Rates of Reaction', bullets:[
+      'Collision theory; factors: T, [ ], pressure, surface area, catalyst.',
+      'On MB curve, catalyst lowers Ea threshold (more molecules above Ea).'
+    ], link:'rates'},
+    {id:'eq', title:'10) Chemical Equilibrium', bullets:[
+      'Dynamic equilibrium in closed systems; Le Châtelier; Kc expression; ICE tables.',
+      'For Haber: ↑P → more NH₃; ↓T (exo) → more NH₃.'
+    ], link:'eq'},
+    {id:'acids', title:'11) Acids & Bases', bullets:[
+      'Brønsted–Lowry definitions; conjugate pairs; strong vs weak; hydrolysis.',
+      'Titrations: pick indicator near equivalence pH; show a moles table.'
+    ], link:'acids'},
+    {id:'electro', title:'12) Electrochemistry', bullets:[
+      'Galvanic vs electrolytic; anode/cathode; write half‑reactions; E°cell = E°cath − E°an.',
+      'Industrial electrolysis (chlor‑alkali); name a safety risk.'
+    ], link:'electro'}
+  ];
+
+  blocks.forEach(b=>{
+    const sec = el('section','p-4 rounded-2xl border bg-white shadow-sm');
+    sec.appendChild(el('h4','text-base font-semibold', b.title));
+    const ul = el('ul','list-disc pl-6 text-sm mt-2');
+    b.bullets.forEach(t=> ul.appendChild(el('li','',t)));
+    sec.appendChild(ul);
+
+    // two worked examples per block (concise)
+    const exWrap = el('div','mt-3 grid md:grid-cols-2 gap-3');
+    const ex1 = el('div','p-3 border rounded-xl bg-gray-50');
+    ex1.appendChild(el('div','font-semibold','Worked Example 1'));
+    ex1.appendChild(el('div','text-sm mt-1', exampleText(b.id,1)));
+    const ex2 = el('div','p-3 border rounded-xl bg-gray-50');
+    ex2.appendChild(el('div','font-semibold','Worked Example 2'));
+    ex2.appendChild(el('div','text-sm mt-1', exampleText(b.id,2)));
+    exWrap.appendChild(ex1); exWrap.appendChild(ex2); sec.appendChild(exWrap);
+
+    // mini‑quiz
+    const mini = el('div','mt-3'); mini.dataset.topic=b.id; mini.className+=' miniquiz'; sec.appendChild(mini);
+
+    // jump link (switch tab and scroll)
+    const link = el('a','text-blue-600 underline inline-block mt-3','Go to matching practice');
+    link.href = '#'; link.dataset.goto = b.link; link.onclick = handleGuidelineJump;
+    sec.appendChild(link);
+
+    host.appendChild(sec);
+  });
+}
+
+function exampleText(id,n){
+  const map = {
+    change:[
+      'Balance C3H8 + O2 → CO2 + H2O. Memo: 3CO2 and 4H2O → need 5O2. Answer: C3H8 + 5O2 → 3CO2 + 4H2O.',
+      'Write net ionic for strong acid + base: H+ + OH− → H2O.'
+    ],
+    quant:[
+      'Limiting reagent: 10.0 g Mg with 0.50 mol HCl in Mg + 2HCl → MgCl2 + H2. Need 0.82 mol HCl; only 0.50 → HCl limits; n(H2)=0.25 mol.',
+      'Concentration: moles in 250.0 cm³ of 0.200 M Na2SO4: n=CV=0.200×0.250=0.0500 mol.'
+    ],
+    imf:[
+      'Rank BP: propane < propanone < propan‑1‑ol (London < dipole < H‑bonding).',
+      'Branching lowers BP (2‑methylbutane < pentane).'
+    ],
+    org:[
+      'IUPAC: CH3–CH2–CO–CH3 → butan‑2‑one.',
+      'Isomers: butane vs 2‑methylpropane → chain isomers.'
+    ],
+    rxn:[
+      'Propene + HBr (no peroxide) → 2‑bromopropane (Markovnikov).',
+      'Esterification: ethanol + ethanoic acid ⇌ ethyl ethanoate + H2O; conc. H2SO4, heat, reflux.'
+    ],
+    energy:[
+      'Bond enthalpy: H2 + 1/2 O2 → H2O; ΔH ≈ 685 − 926 = −241 kJ·mol⁻¹.',
+      'Exothermic profile: products below reactants; ΔH is vertical drop; Ea arrows to peak.'
+    ],
+    rates:[
+      'Higher T → more particles have E≥Ea → faster rate (collision theory).',
+      'Catalyst lowers Ea; on MB curve, threshold shifts left.'
+    ],
+    eq:[
+      'Kc for N2 + 3H2 ⇌ 2NH3: [NH3]^2/([N2][H2]^3); small Kc → little product.',
+      '↑Pressure on Haber → shifts right (fewer moles).'
+    ],
+    acids:[
+      'Titration: 25.00 cm³ of 0.100 M HCl needs 20.00 cm³ of 0.125 M NaOH; pH≈7 at equivalence.',
+      'Hydrolysis: CH3COONa basic (pH>7); NH4Cl acidic (pH<7).'
+    ],
+    electro:[
+      'Cell Zn|Zn2+||Cu2+|Cu: anode Zn→Zn2+ + 2e−; cathode Cu2+ + 2e−→Cu; e− flow Zn→Cu.',
+      'E°cell = 0.34 − (−0.76) = +1.10 V (spontaneous).'
+    ]
+  };
+  return (map[id] && map[id][n-1]) || '';
+}
+
+function handleGuidelineJump(e){
+  e.preventDefault(); const id = e.currentTarget.dataset.goto; if(!id) return;
+  setTab('practice'); setTimeout(()=>{ document.getElementById('sec-'+id)?.scrollIntoView({behavior:'smooth'}); }, 50);
+}
+
+// ===== exam builder =====
 function buildExam(){
-  const mcqs=[...MCQ].sort(()=>Math.random()-0.5).slice(0,10);
-  const pool=[...SECTIONS].sort(()=>Math.random()-0.5);
-  let sum=0; const structured=[]; for(const sec of pool){ for(const it of sec.items){ if(sum<130){ structured.push({sec:sec.id, ...it}); sum+=it.marks; } } }
+  const mcqs=shuffle(MCQ_BANK).slice(0,10);
+  const pool=[...SECTIONS].map(s=>s.items.map(x=>({sec:s.id, ...x}))).flat();
+  let sum=0; const structured=[]; shuffle(pool).forEach(it=>{ if(sum<130){ structured.push(it); sum+=it.marks||4; } });
   state.paper={mcqs, structured, total:20+sum};
-  // render
   const eMCQ=$('exam-mcq'); const eS=$('exam-structured'); if(eMCQ&&eS){ eMCQ.innerHTML=''; eS.innerHTML='';
     mcqs.forEach((q,i)=> eMCQ.appendChild(MCQItem(q,i)));
     structured.forEach(it=>{
@@ -573,7 +561,9 @@ function buildExam(){
   }
 }
 
-// tabs
+// ===== state & bindings =====
+const state = { reveal:false, responses:{}, mode:'practice', seconds:3*60*60, timer:null, ticking:false, paper:null, mcqTopic:null };
+
 function setTab(name){
   state.mode=name;
   ['practice','exam','guidelines'].forEach(t=>{
@@ -582,8 +572,6 @@ function setTab(name){
     const sec=$(`tab-${t}`); if(sec){ if(t===name) sec.classList.remove('hidden'); else sec.classList.add('hidden'); }
   });
 }
-
-document.querySelectorAll('button[data-tab]').forEach(b=> b.onclick=()=> setTab(b.dataset.tab));
 
 // header buttons
 $('btn-reveal').onclick=()=>{ state.reveal=!state.reveal; $('btn-reveal').textContent= state.reveal? 'Hide answers':'Reveal answers'; renderMCQ(); renderSections(); buildExam(); };
@@ -608,89 +596,19 @@ $('btn-toggle-reveal').onclick=()=>{ if(!state.ticking){ state.reveal=!state.rev
 function fmt(s){ const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), x=s%60; const pad=n=>String(n).padStart(2,'0'); return `${pad(h)}:${pad(m)}:${pad(x)}`; }
 function tick(){ if(!state.ticking) return; state.seconds=Math.max(0,state.seconds-1); $('time').textContent=fmt(state.seconds); if(state.seconds===0){ state.ticking=false; state.reveal=true; clearInterval(state.timer);} }
 
-function renderAll(){ renderChips(); renderMCQ(); renderSections(); renderGallery(); }
+// practice controls
+$('btn-mcq-shuffle').onclick=()=> renderMCQ();
+$('mcq-count').onchange=()=> renderMCQ();
+
+// guidelines: shuffle mini‑quiz and jump links
+$('btn-shuffle-miniquiz').onclick=()=>{ document.querySelectorAll('.miniquiz').forEach(b=>{ b.innerHTML=''; b.dataset.ready=''; }); renderMiniQuizzes(); };
+
+function renderMiniQuizzes(){ document.querySelectorAll('.miniquiz').forEach(box=>{ if(box.dataset.ready) return; buildMiniQuiz(box, box.dataset.topic); box.dataset.ready='1'; }); }
+
+function renderAll(){ renderTopicButtons(); renderMCQ(); renderSections(); renderGallery(); renderGuidelineTopics(); renderMiniQuizzes(); }
 
 $('year').textContent = new Date().getFullYear();
-// ---- mini‑quiz data & renderer ----
-const MINIQ = {
-  change: [
-    {q:'Balance: C2H6 + O2 → CO2 + H2O', opts:['C2H6 + 3O2 → 2CO2 + 3H2O','C2H6 + 7/2 O2 → 2CO2 + 3H2O','2C2H6 + 5O2 → 4CO2 + 6H2O','C2H6 + 5O2 → 2CO2 + 2H2O'], a:2, why:'Count atoms; avoid fractions in final: 2C2H6 + 7O2 → 4CO2 + 6H2O but O₂ is 7, so 2C2H6 + 7O2 is correct → option 3 (indices zero-based).'},
-    {q:'Net ionic for strong acid + strong base?', opts:['H+ + OH− → H2O','H3O+ → H2O + H+','Na+ + Cl− → NaCl','H+ + Cl− → HCl'], a:0, why:'Spectators removed → H+ + OH− → H2O.'}
-  ],
-  quant: [
-    {q:'At STP, moles in 11.2 dm³ of CO₂?', opts:['0.25 mol','0.50 mol','1.0 mol','2.0 mol'], a:1, why:'22.4 dm³·mol⁻¹ → 11.2/22.4 = 0.50 mol.'},
-    {q:'250 cm³ of 0.200 M NaCl has how many moles?', opts:['0.0200','0.0250','0.0500','0.00500'], a:2, why:'n=CV=0.200×0.250=0.0500 mol.'}
-  ],
-  imf: [
-    {q:'Stronger IMF means…', opts:['higher vapour pressure','lower boiling point','higher boiling point','no change'], a:2, why:'Stronger IMF → particles stick more → need more energy to boil.'},
-    {q:'Branching generally…', opts:['raises BP','lowers BP','no effect','only affects MP'], a:1, why:'Lower surface area → weaker London forces.'}
-  ],
-  org: [
-    {q:'CH3–CH2–CO–CH3 is a…', opts:['aldehyde','ketone','alcohol','ester'], a:1, why:'Carbonyl inside chain → ketone.'},
-    {q:'Butane vs 2‑methylpropane are…', opts:['position isomers','functional isomers','chain isomers','stereoisomers'], a:2, why:'Different carbon skeletons.'}
-  ],
-  rxn: [
-    {q:'Propene + HBr (no peroxide) gives…', opts:['1‑bromopropane','2‑bromopropane','propan‑2‑ol','propane'], a:1, why:'Markovnikov addition.'},
-    {q:'Esterification needs…', opts:['dilute H₂SO₄, cold','conc. H₂SO₄, heat, reflux','NaOH, heat','UV light'], a:1, why:'Acid catalyst + heat + reflux.'}
-  ],
-  energy: [
-    {q:'Exothermic reaction has…', opts:['ΔH>0 and products above','ΔH<0 and products below','ΔH=0','no activation energy'], a:1, why:'Products lower than reactants; energy released.'},
-    {q:'Bond‑enthalpy estimate uses…', opts:['formed − broken','broken − formed','Ea − ΔH','Kc values'], a:1, why:'ΔH ≈ ΣE(broken) − ΣE(formed).'}
-  ],
-  rates: [
-    {q:'Increase rate by…', opts:['lowering T','decreasing [reactant]','using a catalyst','removing surface area'], a:2, why:'Catalyst lowers Ea.'},
-    {q:'Higher T increases rate because…', opts:['more collisions only','more particles have E≥Ea','Ea increases','IMFs decrease'], a:1, why:'Greater fraction above Ea and more frequent collisions.'}
-  ],
-  eq: [
-    {q:'For N2+3H2⇌2NH3, ↑P shifts…', opts:['left','right','no change','depends on T only'], a:1, why:'Fewer moles on RHS (2 vs 4).'},
-    {q:'Small Kc means…', opts:['mostly products','mostly reactants','no reaction','fast reaction'], a:1, why:'Equilibrium lies to reactants.'}
-  ],
-  acids: [
-    {q:'Conjugate base of H2SO4?', opts:['HSO4−','SO4^2−','H3O+','OH−'], a:0, why:'Remove one H+ from H2SO4 → HSO4−.'},
-    {q:'Strong acid vs weak acid:', opts:['stronger has larger Ka','stronger has smaller Ka','stronger has larger pH','no Ka'], a:0, why:'Large Ka → strong acid.'}
-  ],
-  electro: [
-    {q:'In galvanic Zn/Cu cell, anode is…', opts:['Cu','Zn','both','neither'], a:1, why:'Anode is oxidation: Zn→Zn2+ + 2e−.'},
-    {q:'E°cell =', opts:['E°an − E°cath','E°cath − E°an','E°cath + E°an','not defined'], a:1, why:'By convention, E°cell = E°(cath) − E°(an).'}
-  ]
-};
-
-function buildMiniQuiz(container, topic){
-  const data = shuffle(MINIQ[topic]||[]).slice(0,2);
-  if(!data.length) return;
-  const wrap = document.createElement('div'); wrap.className='mt-2 grid sm:grid-cols-2 gap-3';
-  data.forEach((q,i)=>{
-    const card = document.createElement('div'); card.className='p-3 rounded-xl border bg-white';
-    const title = document.createElement('div'); title.className='text-xs text-gray-500'; title.textContent = `Mini‑quiz ${i+1}`; card.appendChild(title);
-    const qdiv = document.createElement('div'); qdiv.className='font-medium mt-1'; qdiv.textContent=q.q; card.appendChild(qdiv);
-    const opts = document.createElement('div'); opts.className='mt-2 grid gap-2';
-    q.opts.forEach((t,idx)=>{
-      const b=document.createElement('button'); b.className='text-left px-3 py-2 rounded-xl border hover:bg-gray-50'; b.innerHTML = `<span class="font-semibold mr-2">${String.fromCharCode(65+idx)}.</span>${t}`;
-      b.onclick=()=>{
-        [...opts.children].forEach(ch=> ch.classList.remove('ring-green','ring-red','ring-blue'));
-        if(idx===q.a){ b.classList.add('ring-green'); fb.textContent='Correct'; fb.className='text-xs text-green-600 mt-2'; }
-        else { b.classList.add('ring-red'); fb.textContent=`Answer: ${String.fromCharCode(65+q.a)} – ${q.why}`; fb.className='text-xs text-red-600 mt-2'; }
-      };
-      opts.appendChild(b);
-    });
-    const fb=document.createElement('div'); fb.className='text-xs text-gray-600 mt-2';
-    card.appendChild(opts); card.appendChild(fb); wrap.appendChild(card);
-  });
-  container.appendChild(wrap);
-}
-
-function renderMiniQuizzes(){
-  document.querySelectorAll('.miniquiz').forEach(box=>{
-    if(box.dataset.ready) return; // prevent duplicates
-    buildMiniQuiz(box, box.dataset.topic);
-    box.dataset.ready = '1';
-  });
-}
-
 renderAll();
-renderMiniQuizzes();
-const btnShuffle = document.getElementById('btn-shuffle-miniquiz');
-if(btnShuffle){ btnShuffle.onclick = ()=>{ document.querySelectorAll('.miniquiz').forEach(b=>{ b.innerHTML=''; b.dataset.ready=''; }); renderMiniQuizzes(); }; }
 setTab('practice');
 </script>
 </body>
