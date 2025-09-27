@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mpumi • CAPS Grade 12 Chemistry (Paper 2)</title>
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel for JSX in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useEffect, useMemo, useState } = React;
+
+    // ======================= QUESTION BANK (EXPANDED) =======================
+    // Mixed: brand-new + past-paper-style items. Strictly Paper 2: Chemistry.
+    const BANK = {
+      mcq: [
+        // ORGANIC FOUNDATIONS
+        { id: "1.1", topic: "Organic: Intro", q: "General formula for alkanes?", options: ["CnH2n", "CnH2n+2", "CnH2n-2", "CnH2nO"], answer: 1, explain: "Saturated hydrocarbons follow CnH2n+2." },
+        { id: "1.2", topic: "Organic: Functional groups", q: "Which is an aldehyde?", options: ["CH3CH2OH", "CH3CHO", "CH3COOH", "CH3OCH3"], answer: 1, explain: "CH3CHO has the terminal –CHO group." },
+        { id: "1.3", topic: "Organic: Isomerism", q: "2-methylpropane and butane are…", options: ["Functional isomers", "Chain isomers", "Position isomers", "Geometric isomers"], answer: 1, explain: "Same formula, different carbon skeletons." },
+        { id: "1.4", topic: "Organic: Reactions", q: "Ethene + HBr (no peroxide). Major product?", options: ["Bromoethane", "2-bromoethane", "Bromoethene", "1,2-dibromoethane"], answer: 0, explain: "Markovnikov addition across C=C gives bromoethane." },
+        { id: "1.5", topic: "Organic: Properties", q: "Which has the highest boiling point (similar Mr)?", options: ["Alkane", "Aldehyde", "Alcohol", "Ether"], answer: 2, explain: "Alcohols can H‑bond → highest BP." },
+
+        // INTERMOLECULAR FORCES
+        { id: "1.6", topic: "IMFs", q: "Main IMF in propanone (acetone)?", options: ["Hydrogen bonding", "Dipole–dipole", "Ionic", "Metallic"], answer: 1, explain: "Polar C=O causes dipole–dipole." },
+        { id: "1.7", topic: "IMFs", q: "Branching usually… BP compared to straight chain isomer.", options: ["Raises", "Lowers", "No effect", "First raises then lowers"], answer: 1, explain: "Lower surface area → weaker London forces." },
+
+        // RATES & ENERGY
+        { id: "1.8", topic: "Rates", q: "Which change increases initial rate for CaCO3 + HCl?", options: ["Lower T", "Powder the solid", "Dilute acid", "Remove catalyst"], answer: 1, explain: "More surface area → more effective collisions." },
+        { id: "1.9", topic: "Energy", q: "For an endothermic reaction…", options: ["ΔH < 0", "Products have higher PE than reactants", "Catalyst changes ΔH", "Lowering T increases yield for endothermic"], answer: 1, explain: "Endothermic absorbs energy → products at higher PE." },
+
+        // EQUILIBRIUM
+        { id: "1.10", topic: "Equilibrium", q: "N2 + 3H2 ⇌ 2NH3 (ΔH < 0). Which favours forward?", options: ["Increase T", "Decrease pressure", "Increase pressure", "Remove catalyst"], answer: 2, explain: "Fewer gas moles on product side." },
+        { id: "1.11", topic: "Equilibrium", q: "For A + B ⇌ 2C, Kc = 1.0×10⁻³ at 25 °C implies…", options: ["Products favoured", "Reactants favoured", "Exactly equal at eqm", "Need Qc"], answer: 1, explain: "Small Kc → mostly reactants present at eqm." },
+
+        // ACIDS & BASES
+        { id: "1.12", topic: "Acids & Bases", q: "Conjugate base of HSO4⁻ is…", options: ["SO4²⁻", "HSO4²⁻", "H2SO4", "SO3²⁻"], answer: 0, explain: "Loss of one proton from HSO4⁻ gives SO4²⁻." },
+        { id: "1.13", topic: "Acids & Bases", q: "Which Ka corresponds to the strongest acid?", options: ["7×10⁻⁴", "3×10⁻⁶", "9×10⁻⁹", "1×10⁻¹¹"], answer: 0, explain: "Larger Ka → stronger acid." },
+        { id: "1.14", topic: "Acids & Bases", q: "pH of 0.010 M HCl at 25 °C is…", options: ["1.00", "2.00", "12.00", "13.00"], answer: 1, explain: "Strong acid: [H⁺] = 0.010 → pH = 2.00." },
+
+        // ELECTROCHEMISTRY
+        { id: "1.15", topic: "Electrochemistry", q: "In an electrolytic cell…", options: ["Reaction is spontaneous", "Anode is positive", "Cathode is positive", "No DC supply needed"], answer: 1, explain: "Electrolytic needs power; anode is +, cathode −." },
+        { id: "1.16", topic: "Electrochemistry", q: "Which overall reaction is spontaneous (standard)?", options: ["Cu + Zn²⁺ → Cu²⁺ + Zn", "Zn + Cu²⁺ → Zn²⁺ + Cu", "Ag + Cu²⁺ → Ag⁺ + Cu", "2I⁻ + Br₂ → I₂ + 2Br⁻"], answer: 1, explain: "E° ≈ +1.10 V for Zn/Cu cell." },
+
+        // ENVIRONMENTAL & EMPIRICAL
+        { id: "1.17", topic: "Environmental", q: "Eutrophication mainly results from…", options: ["Nutrient enrichment (N/P)", "Increased O₂ solubility", "Acid rain neutralisation", "Desalination"], answer: 0, explain: "Runoff → algal bloom → O₂ depletion." },
+        { id: "1.18", topic: "Organic: Empirical", q: "Empirical formula of ethyl ethanoate (C4H8O2).", options: ["C2H4O", "C4H8O2", "C2H2O", "CH2O"], answer: 0, explain: "Divide subscripts by 2: C2H4O." },
+
+        // MORE ORGANIC & RATES ADDITIONS
+        { id: "1.19", topic: "Organic: Oxidation", q: "Primary alcohol + mild oxidant typically forms…", options: ["Alkane", "Ketone", "Aldehyde", "Ester"], answer: 2, explain: "Primary → aldehyde (further → acid)." },
+        { id: "1.20", topic: "Rates", q: "A catalyst lowers…", options: ["ΔH only", "Eₐ only", "Kc value", "Equilibrium yield only"], answer: 1, explain: "Catalyst lowers activation energy; ΔH & Kc unchanged." },
+        { id: "1.21", topic: "Electrochemistry", q: "In a galvanic cell, electrons flow…", options: ["Cathode → anode in wire", "Anode → cathode in wire", "Through salt bridge only", "Both directions"], answer: 1, explain: "From oxidation site (anode) to reduction site (cathode)." },
+        { id: "1.22", topic: "Equilibrium", q: "Adding catalyst to an equilibrium system will…", options: ["Change Kc", "Shift equilibrium right", "Shift equilibrium left", "Reach equilibrium faster"], answer: 3, explain: "Catalyst speeds both directions equally → Kc unchanged." },
+        { id: "1.23", topic: "Acids & Bases", q: "Conjugate acid of NH3 is…", options: ["NH2⁻", "NH4⁺", "H2", "OH⁻"], answer: 1, explain: "Gain of one proton gives NH4⁺." },
+        { id: "1.24", topic: "Organic: Nomenclature", q: "Name CH3CH2COCH3.", options: ["Butanone", "Propanone", "Butanal", "2-methylpropanal"], answer: 0, explain: "Four carbons, carbonyl at C2 → butan-2-one." }
+      ],
+
+      structured: [
+        {
+          id: "2", marks: 22, topic: "Organic: Mixed",
+          prompt: `A (CH3CH2OH), B (CH3CHO), C (CH3COOH), D (CH3COOCH3), E (2-bromopropane), F (CH3CH2CH=CH2).
+2.1 Define hydrocarbon. (2)
+2.2 Name B, E, F. (6)
+2.3 A + C → D. 2.3.1 Type of reaction. (1) 2.3.2 Balanced equation (structural or molecular). (3)
+2.4 Is B a functional isomer of A? Motivate. (3)
+2.5 Balanced combustion equation for F. (3)
+2.6 Homologous series of D. (2)`,
+          answer: `Hydrocarbon: C and H only. Names: Ethanal; 2-bromopropane; but-1-ene. Esterification; CH3OH + CH3COOH ⇌ CH3COOCH3 + H2O. Not functional isomers (different formulas). C4H8 + 6O2 → 4CO2 + 4H2O. Ester.`
+        },
+        { id: "3", marks: 15, topic: "IMFs & Properties",
+          prompt: `BP (°C) at 101.3 kPa: pentane 36; 2-methylbutane 28; propanone 56; propan-1-ol 97.
+3.1 Define boiling point. (2) 3.2 Explain pentane vs 2‑methylbutane BP. (3) 3.3 Which higher BP: propanone or propan‑1‑ol? Motivate. (3) 3.4 Lowest vapour pressure at 25 °C? Motivate. (3) 3.5 Main IMF in propanone. (4)`,
+          answer: `BP definition; branching lowers London forces; propan‑1‑ol higher (H‑bonding); lowest VP = highest BP = propan‑1‑ol; dipole–dipole (C=O).` },
+        { id: "4", marks: 16, topic: "Rates & Energy",
+          prompt: `4.1 TWO factors that increase rate for Mg + HCl. (2)
+4.2 Use collision theory to explain the effect of temperature. (4)
+4.3 Sketch/label PE diagram for exothermic reaction (Ea, ΔH). (4)
+4.4 Bond energies (kJ·mol⁻¹): H–H 436, O=O 498, O–H 463. Calculate ΔH for H2 + ½O2 → H2O(g). (6)`,
+          answer: `Higher [HCl], greater SA/temperature/catalyst. Higher T → more particles with E ≥ Ea, higher collision frequency. Reactants above products; ΔH negative; Ea arrow. ΔH = (436+0.5×498) − 2×463 = 685 − 926 = −241 kJ·mol⁻¹.` },
+        { id: "5", marks: 18, topic: "Equilibrium & Kc",
+          prompt: `At 700 K: N2(g) + 3H2(g) ⇌ 2NH3(g) (ΔH < 0). A 2.00 dm³ vessel contains n(N2)=1.00, n(H2)=3.00, n(NH3)=0.20.
+5.1 Write Kc. (2) 5.2 Calculate concentrations (mol·dm⁻³). (2) 5.3 Compute Qc and decide direction to reach eqm. (6) 5.4 Predict effect on NH3 yield of: (a) lowering T (b) increasing pressure (c) continuous removal of NH3. Motivate. (8)`,
+          answer: `Kc = [NH3]^2/([N2][H2]^3). [N2]=0.50, [H2]=1.50, [NH3]=0.10. Qc≈5.9×10⁻³; compare with Kc: if Qc<Kc → forward. Lower T favours exothermic forward; higher P favours fewer moles; removing NH3 drives forward.` },
+        { id: "6", marks: 16, topic: "Acids, pH & Hydrolysis",
+          prompt: `6.1 Define a Brønsted–Lowry acid. (2) 6.2 pH of 0.020 M HNO3. (3) 6.3 0.10 M CH3COOH (Ka=1.8×10⁻⁵): set up and solve for [H3O⁺] with x≪0.10. (6) 6.4 Hydrolysis of CO3²⁻ in water. (3) 6.5 Identify the conjugate pair in NH4⁺/NH3. (2)`,
+          answer: `Proton donor. pH=1.70. x=√(Ka·C)=√(1.8×10⁻⁶)=1.34×10⁻³ M → pH≈2.87. CO3²⁻+H2O⇌HCO3⁻+OH⁻. Conjugate pair differs by one proton.` },
+        { id: "7", marks: 14, topic: "Electrochemistry",
+          prompt: `Zn|Zn²⁺(1.0 M) || Cu²⁺(1.0 M)|Cu, 25 °C. E°(Zn²⁺/Zn)=−0.76 V; E°(Cu²⁺/Cu)=+0.34 V.
+7.1 Identify anode/cathode; electron flow. (4) 7.2 Both half-reactions + overall. (6) 7.3 E°cell. (2) 7.4 One industrial electrolysis use. (2)`,
+          answer: `Anode Zn (oxidation), cathode Cu (reduction); e⁻ flows anode→cathode. Zn→Zn²⁺+2e⁻; Cu²⁺+2e⁻→Cu; Overall: Zn+Cu²⁺→Zn²⁺+Cu. E°=+1.10 V. Electroplating/Cu purification/etc.` },
+        // EXTRA to reach ~150 with MCQ=20
+        { id: "10", marks: 7, topic: "Acid–Base Titration",
+          prompt: `10.1 25.00 cm³ of 0.100 M HCl neutralises V cm³ of NaOH. Find V if NaOH is 0.125 M. (4)
+10.2 State TWO good titration practices to improve accuracy. (3)`,
+          answer: `n(HCl)=0.100×0.02500=0.00250 mol → n(NaOH)=0.00250 mol → V= n/C = 0.00250/0.125 = 0.0200 L = 20.00 cm³. Practices: read at eye level; rinse burette with solution; remove air bubbles; use indicator at endpoint; swirl consistently.` }
+      ]
+    };
+
+    // ======================= UTILITIES =======================
+    function shuffle(arr) { const a = [...arr]; for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+    function pickMCQs(pool, n) { return shuffle(pool).slice(0, n); }
+    // Greedy pick of structured blocks to target desired total marks
+    function pickStructured(targetMarks) {
+      const blocks = shuffle(BANK.structured);
+      const chosen = []; let sum = 0;
+      for (const b of blocks) {
+        if (sum + b.marks <= targetMarks || chosen.length === 0) { // ensure at least one
+          chosen.push(b);
+          sum += b.marks;
+          if (sum >= targetMarks) break;
+        }
+      }
+      return { chosen, sum };
+    }
+
+    // ======================= UI COMPONENTS =======================
+    function Chip({ label, active, onClick }) {
+      return (
+        <button onClick={onClick} className={`px-3 py-1 rounded-full text-sm border transition ${active ? 'bg-black text-white border-black' : 'bg-white hover:bg-gray-100 border-gray-300'}`}>
+          {label}
+        </button>
+      );
+    }
+
+    function MCQ({ item, index, onMark, response, reveal }) {
+      const letters = ['A','B','C','D'];
+      return (
+        <div className="p-4 rounded-2xl border shadow-sm mb-3 bg-white">
+          <div className="text-xs text-gray-500">MCQ {index + 1} • {item.topic}</div>
+          <div className="font-medium mt-1">{item.q}</div>
+          <div className="mt-3 grid gap-2">
+            {item.options.map((opt, i) => {
+              const chosen = response === i;
+              const correct = i === item.answer;
+              const state = reveal
+                ? (correct ? 'ring-2 ring-green-500' : chosen ? 'ring-2 ring-red-500' : '')
+                : (chosen ? 'ring-2 ring-blue-400' : '');
+              return (
+                <button key={i} onClick={() => onMark(i)} className={`text-left px-3 py-2 rounded-xl border ${state} hover:bg-gray-50`}>
+                  <span className="font-semibold mr-2">{letters[i]}.</span> {opt}
+                </button>
+              );
+            })}
+          </div>
+          {reveal && (
+            <div className="mt-3 text-sm text-gray-700">
+              <div><span className="font-semibold">Answer:</span> {String.fromCharCode(65 + item.answer)}</div>
+              <div className="mt-1">{item.explain}</div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function Structured({ block, reveal }) {
+      return (
+        <div className="p-5 rounded-2xl border shadow-sm mb-4 bg-white">
+          <div className="text-xs text-gray-500">Question {block.id} • {block.topic} • {block.marks} marks</div>
+          <pre className="whitespace-pre-wrap font-sans mt-2">{block.prompt}</pre>
+          {reveal && (
+            <div className="mt-3 p-3 bg-green-50 rounded-xl border border-green-200">
+              <div className="font-semibold">Memo (overview)</div>
+              <pre className="whitespace-pre-wrap font-sans mt-1 text-sm">{block.answer}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ======================= MAIN APP =======================
+    function App() {
+      // Practice state
+      const [topic, setTopic] = useState('All');
+      const [reveal, setReveal] = useState(false);
+      const [responses, setResponses] = useState({});
+
+      // Exam mode state
+      const [exam, setExam] = useState(null); // { mcqs:[], structured:[], totalMarks }
+      const [running, setRunning] = useState(false);
+      const [secondsLeft, setSecondsLeft] = useState(3 * 60 * 60); // 3 hours
+
+      // Derived lists
+      const topics = useMemo(() => ['All', ...Array.from(new Set(BANK.mcq.map(m => m.topic))).sort()], []);
+      const mcqFiltered = useMemo(() => BANK.mcq.filter(m => topic === 'All' || m.topic === topic), [topic]);
+      const practiceScore = useMemo(() => mcqFiltered.reduce((acc, q) => acc + ((responses[q.id] ?? -1) === q.answer ? 1 : 0), 0), [mcqFiltered, responses]);
+
+      // Timer effect for Exam Mode
+      useEffect(() => {
+        if (!running) return;
+        const id = setInterval(() => {
+          setSecondsLeft(prev => {
+            if (prev <= 1) { clearInterval(id); setRunning(false); setReveal(true); return 0; }
+            return prev - 1;
+          });
+        }, 1000);
+        return () => clearInterval(id);
+      }, [running]);
+
+      function startExam() {
+        // Build a 150-mark paper: 10 MCQs (20 marks) + structured ≈ 130 marks
+        const mcqs = pickMCQs(BANK.mcq, 10);
+        const { chosen, sum } = pickStructured(130);
+        const totalMarks = 20 + sum; // approx 150
+        setExam({ mcqs, structured: chosen, totalMarks });
+        setResponses({});
+        setReveal(false);
+        setSecondsLeft(3 * 60 * 60);
+        setRunning(true);
+      }
+
+      function stopExam() { setRunning(false); }
+      function resetExam() { setRunning(false); setSecondsLeft(3*60*60); setExam(null); setReveal(false); setResponses({}); }
+
+      function mark(id, choice) { setResponses(prev => ({ ...prev, [id]: choice })); }
+      function resetPractice() { setResponses({}); setReveal(false); }
+
+      const fmt = (s) => {
+        const h = Math.floor(s/3600); const m = Math.floor((s%3600)/60); const sec = s%60;
+        const pad = (n) => n.toString().padStart(2,'0');
+        return `${pad(h)}:${pad(m)}:${pad(sec)}`;
+      };
+
+      return (
+        <div className="min-h-screen bg-gray-50 text-gray-900">
+          <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
+            <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+              <h1 className="text-xl md:text-2xl font-bold">Mpumi • CAPS Grade 12 Chemistry (Paper 2)</h1>
+              <div className="flex items-center gap-2">
+                {!exam && (
+                  <>
+                    <button onClick={() => setReveal(v => !v)} className="px-3 py-2 rounded-xl border hover:bg-gray-100">{reveal ? 'Hide Answers' : 'Reveal Answers'}</button>
+                    <button onClick={resetPractice} className="px-3 py-2 rounded-xl border hover:bg-gray-100">Reset</button>
+                  </>
+                )}
+                {exam && (
+                  <>
+                    <div className="px-3 py-2 rounded-xl border text-sm">Time left: <span className="font-mono">{fmt(secondsLeft)}</span></div>
+                    <button onClick={() => setReveal(r => !r)} disabled={running} className={`px-3 py-2 rounded-xl border ${running ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}>{reveal ? 'Hide Answers' : 'Reveal Answers'}</button>
+                    {!running ? (
+                      <button onClick={() => setRunning(true)} className="px-3 py-2 rounded-xl border hover:bg-gray-100">Resume</button>
+                    ) : (
+                      <button onClick={stopExam} className="px-3 py-2 rounded-xl border hover:bg-gray-100">Pause</button>
+                    )}
+                    <button onClick={resetExam} className="px-3 py-2 rounded-xl border hover:bg-gray-100">End Exam</button>
+                  </>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <main className="max-w-6xl mx-auto px-4 py-6">
+            {/* MODE SWITCHER */}
+            <section className="mb-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div>
+                  <div className="font-semibold">Mode</div>
+                  <div className="text-sm text-gray-600">Practice lets you filter topics and reveal memos freely. Exam Mode builds a 150‑mark paper with a 3‑hour timer.</div>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => setExam(null)} className={`px-3 py-2 rounded-xl border ${!exam ? 'bg-black text-white border-black' : 'hover:bg-gray-100'}`}>Practice</button>
+                  <button onClick={startExam} className={`px-3 py-2 rounded-xl border ${exam ? 'bg-black text-white border-black' : 'hover:bg-gray-100'}`}>Start Mock Exam</button>
+                </div>
+              </div>
+            </section>
+
+            {!exam && (
+              <>
+                {/* PRACTICE: MCQ FILTERS */}
+                <section className="mb-6">
+                  <div className="text-sm text-gray-600">Filter multiple choice by topic</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {['All', ...topics.slice(1)].map(t => (
+                      <Chip key={t} label={t} active={topic === t} onClick={() => setTopic(t)} />
+                    ))}
+                  </div>
+                </section>
+
+                {/* PRACTICE: MCQs & STRUCTURED */}
+                <section className="grid lg:grid-cols-2 gap-4">
+                  <div>
+                    <div className="mb-2 font-semibold">Multiple Choice • {mcqFiltered.length} questions</div>
+                    <div className="mb-3 text-sm text-gray-600">Score: {practiceScore} / {mcqFiltered.length} {reveal && '(Final)'} </div>
+                    {mcqFiltered.map((m, i) => (
+                      <MCQ key={m.id} item={m} index={i} onMark={(choice) => setResponses(prev => ({ ...prev, [m.id]: choice }))} response={responses[m.id]} reveal={reveal} />
+                    ))}
+                  </div>
+
+                  <div>
+                    <div className="mb-2 font-semibold">Structured Questions (with memos)</div>
+                    {BANK.structured.map((blk) => (
+                      <Structured key={blk.id} block={blk} reveal={reveal} />
+                    ))}
+                  </div>
+                </section>
+              </>
+            )}
+
+            {exam && (
+              <>
+                {/* EXAM: MCQs */}
+                <section className="mb-6">
+                  <div className="mb-2 font-semibold">Mock Exam • Target ≈150 marks</div>
+                  <div className="text-sm text-gray-600 mb-4">Paper contains 10 MCQs (20) + structured (≈{exam.totalMarks - 20}) for ≈ {exam.totalMarks} marks. Timer is running. Answers can be revealed only when paused or when time expires.</div>
+                  <div className="grid lg:grid-cols-2 gap-4">
+                    <div>
+                      <div className="mb-2 font-semibold">Multiple Choice (10 × 2 = 20)</div>
+                      {exam.mcqs.map((m, i) => (
+                        <MCQ key={m.id} item={m} index={i} onMark={(choice) => setResponses(prev => ({ ...prev, [m.id]: choice }))} response={responses[m.id]} reveal={reveal} />
+                      ))}
+                    </div>
+                    <div>
+                      <div className="mb-2 font-semibold">Structured (≈ {exam.totalMarks - 20} marks)</div>
+                      {exam.structured.map((blk) => (
+                        <Structured key={blk.id} block={blk} reveal={reveal} />
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              </>
+            )}
+
+            {/* HOW-TO */}
+            <section className="mt-8 p-4 rounded-2xl border bg-white shadow-sm">
+              <div className="font-semibold">Exam Mode (how to use)</div>
+              <ol className="list-decimal pl-6 mt-2 text-sm space-y-1">
+                <li>Click <em>Start Mock Exam</em> to generate a fresh paper. The 3‑hour timer begins.</li>
+                <li>Attempt MCQs and structured questions in your notebook.</li>
+                <li>Pause to reveal answers or wait until the timer ends to auto‑reveal.</li>
+                <li>Click <em>End Exam</em> to reset and build another randomized paper.</li>
+              </ol>
+            </section>
+          </main>
+
+          <footer className="max-w-6xl mx-auto px-4 py-6 text-xs text-gray-500">
+            © {new Date().getFullYear()} Mpumi’s CAPS Chemistry Practice • Paper 2. Built for exam prep.
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
